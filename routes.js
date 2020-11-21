@@ -37,22 +37,19 @@ router.post("/exchange", (req, res) => {
   for (rate in rates) {
     //if direct conversion exist
     if (rate === exchangeCurrency) {
-      //store the results in a array of objects
-      finalResults.push({
-        conversionCurrency: `${req.body.fromCurrency} ${toCurrency}`,
+      //if direct exchange exist--store value in another object
+      directExhange = {
+        conversionCurrency: `${req.body.fromCurrency} to ${req.body.toCurrency}`,
         conversionRate: rates[rate],
         finalAmount: req.body.value * rates[rate],
-      });
-
-      //it will always return last added(previous line) item in array
-      directExhange = finalResults.slice(-1)[0];
+      };
       break;
     } else {
       //find middle and destination currency exchange rate //BAM -> USD(middle) ->BRL
-      let middleExchanger = `${rate.slice(0, 3)}${toCurrency}`;
+      let middleExchange = `${rate.slice(0, 3)}${toCurrency}`;
       let middleCurrency = `${rate.slice(0, 3)}`;
 
-      if (middleExchanger === rate) {
+      if (middleExchange === rate) {
         //convert from source currency to middle currency --BAMtoUSD
         let firstConversion =
           req.body.value * rates[`${req.body.fromCurrency}to${middleCurrency}`];
@@ -74,12 +71,14 @@ router.post("/exchange", (req, res) => {
     }
   }
 
-  //sort array by the final amoount
-  //first item will be the bigest amount you get
-  finalResults.sort((a, b) => b.finalAmount - a.finalAmount);
-
-  //if there was direct exchange --print it-- else print first item of results
-  return res.send(directExhange === null ? finalResults[0] : directExhange);
+  if (directExhange !== null) {
+    return res.send(directExhange);
+  } else {
+    //sort array by the final amoount
+    //first item will be the bigest amount you get
+    finalResults.sort((a, b) => b.finalAmount - a.finalAmount);
+    return res.send(finalResults[0]);
+  }
 });
 
 module.exports = router;
