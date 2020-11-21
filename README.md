@@ -23,4 +23,4 @@ Currencies must be typed in the **capital** leters and only following currencies
 }
 ```
 ## execution flow
-![diagram] (https://github.com/bilalhodzic/Currency-exchange/blob/main/diagram-exhangeCurrency.png)
+![diagram](https://github.com/bilalhodzic/Currency-exchange/blob/main/diagram-exhangeCurrency.png)
