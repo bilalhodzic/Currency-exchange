@@ -22,3 +22,5 @@ Currencies must be typed in the **capital** leters and only following currencies
     "finalAmount": 335.4921413451216 //Total amount from conversion
 }
 ```
+## execution flow
+![diagram] (https://github.com/bilalhodzic/Currency-exchange/blob/main/diagram-exhangeCurrency.png)
